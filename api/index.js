@@ -66,7 +66,6 @@ app.post('/api/register',async (req,res)=>{
 
 //login Route
 app.post('/api/login', async (req,res) => {
-    
     const {email,password} = req.body;
     const userDoc = await User.findOne({email});
     if (userDoc) {
@@ -85,7 +84,6 @@ app.post('/api/login', async (req,res) => {
       }
     } else {
       return res.json('not found');
-      
     }
   });
 
