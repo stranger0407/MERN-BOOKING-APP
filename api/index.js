@@ -7,11 +7,15 @@ const jwt = require('jsonwebtoken')
 const cors=require('cors');
 const mongoose=require("mongoose");
 const bcrypt = require('bcryptjs');
-const cookieParser = require('cookie-parser')
-require('dotenv').config();
+const cookieParser = require('cookie-parser');
+const dotenv = require('dotenv');
+
+dotenv.config();
+
 const multer = require('multer');
 const imageDownloader = require('image-downloader');
-const fs = require('fs')
+const fs = require('fs');
+const path = require('path');
 
 const bcryptSalt= bcrypt.genSaltSync(10);
 const jwtSecret = 'vguhjhgsrttf2554gh78vhg5fxvb8gdftxb3'
@@ -25,8 +29,10 @@ app.use(cors({
     origin:'https://hotelbazaar.vercel.app/'
 }))
 
-
-mongoose.connect(process.env.MONGO_URL);
+const uri = `${process.env.MONGO_URI}`;
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.log(err));
 
 function getUserDataFromReq(req) {
   return new Promise((resolve, reject) => {
